@@ -6,7 +6,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Theme Tinker",
-  description: "Tinker with your favorite themes",
+  description: "Tinker with your favorite color themes",
+  
 };
 
 export default function RootLayout({

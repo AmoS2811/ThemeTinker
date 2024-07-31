@@ -14,7 +14,7 @@ const Dashboard: React.FC<{ theme: { color: string; locked: boolean }[] }> = ({ 
       <Sidebar backgroundColor={colors[0] || '#000'} />
       <div className="flex-grow">
         <div className="p-4 mb-6 flex justify-between items-center" style={{ backgroundColor: colors[0] || '#000', color: '#fff' }}>
-          <h1 className="text-2xl font-bold">Dashboard</h1>
+          <h1 className="text-2xl font-bold">Example Dashboard</h1>
           <FiMenu className="text-white text-2xl mr-2 hover:text-secondary cursor-pointer" />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 p-6 mb-6 px-8">
