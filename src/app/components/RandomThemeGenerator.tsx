@@ -5,6 +5,7 @@ import Notification from './Notification';
 import namer from 'color-namer';
 import colorNameList from 'color-name-list';
 import { FiLock, FiUnlock } from 'react-icons/fi';
+import Dashboard from './mockComponents/Dashboard';
 
 const RandomThemeGenerator: React.FC = () => {
   const [theme, setTheme] = useState<{ color: string; locked: boolean }[]>([]);
@@ -46,30 +47,33 @@ const RandomThemeGenerator: React.FC = () => {
   };
 
   return (
-    <div className="p-8 bg-white border border-gray-300 rounded-lg shadow-lg text-center w-full mt-10 max-w-6xl">
-      <button className="bg-secondary text-white py-3 px-8 rounded-full font-semibold hover:bg-secondary-dark transition duration-300" onClick={generateTheme}>
-        Generate A Random Theme
-      </button>
-      <p className="text-md text-center text-gray-400 mt-2 mb-8">Click on the color boxes to copy the color code to your clipboard</p>
-      <div className="mt-10 grid grid-cols-1 md:grid-cols-5 gap-6">
-        {theme.map((item, index) => (
-          <div
-            key={index}
-            className="flex flex-col justify-end w-full h-96 rounded-lg cursor-pointer shadow-md transform transition-transform duration-300 hover:scale-105 relative"
-            style={{ backgroundColor: item.color }}
-            onClick={() => copyToClipboard(item.color)}
-          >
-            <div className="absolute top-4 right-4" onClick={(e) => { e.stopPropagation(); toggleLock(index); }}>
-              {item.locked ? <FiLock className="text-white text-2xl" /> : <FiUnlock className="text-white text-2xl" />}
+    <div className="flex flex-col items-center w-full">
+      <div className="p-8 bg-white border border-gray-300 rounded-lg shadow-lg text-center w-full" style={{ maxWidth: '80%' }}>
+        <div className="mt-10 grid grid-cols-1 md:grid-cols-5 gap-6">
+          {theme.map((item, index) => (
+            <div
+              key={index}
+              className="flex flex-col justify-end w-full h-96 rounded-lg cursor-pointer shadow-md transform transition-transform duration-300 hover:scale-105 relative"
+              style={{ backgroundColor: item.color }}
+              onClick={() => copyToClipboard(item.color)}
+            >
+              <div className="absolute top-4 right-4" onClick={(e) => { e.stopPropagation(); toggleLock(index); }}>
+                {item.locked ? <FiLock className="text-white text-2xl" /> : <FiUnlock className="text-white text-2xl" />}
+              </div>
+              <div className="bg-white bg-opacity-75 p-4 rounded-b-lg text-center">
+                <p className="font-bold text-lg">{item.color.toUpperCase()}</p>
+                <p className="text-md">{getColorName(item.color)}</p>
+              </div>
             </div>
-            <div className="bg-white bg-opacity-75 p-4 rounded-b-lg text-center">
-              <p className="font-bold text-lg">{item.color.toUpperCase()}</p>
-              <p className="text-md">{getColorName(item.color)}</p>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
+        <button className="mt-12 bg-primary text-white py-3 px-8 rounded-full font-semibold hover:bg-secondary-dark transition duration-300" onClick={generateTheme}>
+          Generate A Random Theme
+        </button>
+        <p className="text-md text-center text-gray-400 mt-2 mb-2">Click on the color boxes to copy the color code to your clipboard</p>
+        <Notification message={notification.message} show={notification.show} onClose={() => setNotification({ ...notification, show: false })} backgroundColor={notification.backgroundColor} />
       </div>
-      <Notification message={notification.message} show={notification.show} onClose={() => setNotification({ ...notification, show: false })} backgroundColor={notification.backgroundColor} />
+      <Dashboard theme={theme} />
     </div>
   );
 };
