@@ -1,3 +1,4 @@
+import Footer from './components/Footer';
 import Header from './components/Header';
 import RandomThemeGenerator from './components/RandomThemeGenerator';
 
@@ -12,6 +13,7 @@ export default function Home() {
           <RandomThemeGenerator />
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

@@ -10,7 +10,7 @@ const Dashboard: React.FC<{ theme: { color: string; locked: boolean }[] }> = ({ 
   }, [theme]);
 
   return (
-    <div className="flex w-full mt-10 bg-white border border-gray-300 shadow-lg">
+    <div className="flex w-full mt-8 bg-white border border-gray-300 shadow-lg">
       <Sidebar backgroundColor={colors[0] || '#000'} />
       <div className="flex-grow">
         <div className="p-4 mb-6 flex justify-between items-center" style={{ backgroundColor: colors[0] || '#000', color: '#fff' }}>

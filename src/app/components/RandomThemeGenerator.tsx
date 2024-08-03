@@ -7,10 +7,12 @@ import colorNameList from 'color-name-list';
 import { FiLock, FiUnlock, FiArrowLeft, FiArrowRight, FiSliders } from 'react-icons/fi';
 import { PhotoshopPicker } from 'react-color';
 import Dashboard from './mockComponents/Dashboard';
+import chroma from 'chroma-js';
 
 const RandomThemeGenerator: React.FC = () => {
   const [theme, setTheme] = useState<{ color: string; locked: boolean; showPicker: boolean; initialColor: string }[]>([]);
   const [notification, setNotification] = useState<{ message: string; show: boolean; backgroundColor: string }>({ message: '', show: false, backgroundColor: '' });
+  const [filter, setFilter] = useState<string>('all');
 
   useEffect(() => {
     generateInitialTheme();
@@ -25,9 +27,38 @@ const RandomThemeGenerator: React.FC = () => {
     const newTheme = theme.map((item) =>
       item.locked
         ? item
-        : { color: `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')}`, locked: false, showPicker: false, initialColor: '' }
+        : { color: generateFilteredColor(filter), locked: false, showPicker: false, initialColor: '' }
     );
     setTheme(newTheme);
+  };
+
+  const generateFilteredColor = (filter: string): string => {
+    let color = chroma.random();
+
+    switch (filter) {
+      case 'dark':
+        color = chroma(color).darken(2);
+        break;
+      case 'light':
+        color = chroma(color).brighten(2);
+        break;
+      case 'muted':
+        color = chroma(color).saturate(-2);
+        break;
+      case 'vibrant':
+        color = chroma(color).saturate(2);
+        break;
+      case 'warm':
+        color = chroma.hsl(Math.random() * 60, 1, 0.5);
+        break;
+      case 'cool':
+        color = chroma.hsl(Math.random() * 180 + 180, 1, 0.5);
+        break;
+      default:
+        break;
+    }
+
+    return color.hex();
   };
 
   const adjustColor = (color: any, index: number) => {
@@ -53,7 +84,7 @@ const RandomThemeGenerator: React.FC = () => {
   const copyToClipboard = (color: string, index: number) => {
     if (!theme[index].showPicker) {
       navigator.clipboard.writeText(color);
-      setNotification({ message: `${color} copied to clipboard!`, show: true, backgroundColor: color });
+      setNotification({ message: `${getColorName(color)} (${color}) copied to clipboard!`, show: true, backgroundColor: color });
     }
   };
 
@@ -100,6 +131,17 @@ const RandomThemeGenerator: React.FC = () => {
   return (
     <div className="flex flex-col items-center w-full">
       <div className="p-8 bg-white border border-gray-300 rounded-lg shadow-lg text-center w-full" style={{ maxWidth: '80%' }}>
+        <div className="flex justify-end mb-4">
+          <select value={filter} onChange={(e) => setFilter(e.target.value)} className="border border-gray-300 rounded p-2">
+            <option value="all">All Colors</option>
+            <option value="dark">Dark Colors</option>
+            <option value="light">Light Colors</option>
+            <option value="muted">Muted Colors</option>
+            <option value="vibrant">Vibrant Colors</option>
+            <option value="warm">Warm Colors</option>
+            <option value="cool">Cool Colors</option>
+          </select>
+        </div>
         <div className="mt-10 grid grid-cols-1 md:grid-cols-5 gap-6 relative">
           {theme.map((item, index) => (
             <div
@@ -130,22 +172,23 @@ const RandomThemeGenerator: React.FC = () => {
               </div>
               <div className="bg-white bg-opacity-75 p-4 rounded-b-lg text-center">
                 <p className="font-bold text-lg">{item.color.toUpperCase()}</p>
-                <p className="text-md">{getColorName(item.color)}</p>
+                <p className="text-md truncate max-w-full">{getColorName(item.color)}</p>
               </div>
+
             </div>
           ))}
         </div>
         <button className="mt-8 bg-primary text-white py-3 px-8 rounded-full font-semibold hover:bg-secondary-dark transition duration-300" onClick={generateTheme}>
           Generate A Random Theme
         </button>
-        <p className="text-md text-center text-gray-400 mt-4">Lock in colors you find before they get swept away!</p>
+        <p className="text-md text-center text-gray-400 mt-4">Lock in colors you like before they get swept away!</p>
         <p className="text-md text-center text-gray-400 mt-1">Click on the color boxes to copy the color code to your clipboard</p>
         <p className="text-md text-center text-gray-400 mt-1 mb-2">Only the first three boxes affect the dashboard colors, use the arrows to quickly test various primary and secondary colors!</p>
         <Notification message={notification.message} show={notification.show} onClose={() => setNotification({ ...notification, show: false })} backgroundColor={notification.backgroundColor} />
       </div>
       <div className="p-6">
-          <h2 className="text-4xl font-bold text-center mb-6">Need a mirror for your color themes?</h2>
-          <p className="text-lg text-center text-gray-600 mb-4">Below is a mockup of a dashboard that can be used to see how the colors would mesh together in a real life example</p>
+          <h2 className="text-4xl font-bold text-left mt-10">Need a mirror for your color themes?</h2>
+          <p className="text-lg text-left text-gray-600">Below is a mockup of a dashboard that can be used to see how the colors would mesh together in a real life example</p>
           <Dashboard theme={theme} />
         </div>
     </div>
