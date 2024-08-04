@@ -34,3 +34,22 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# env
+.env
+
+# virtual environment directory
+venv/
+
+# Python bytecode files
+__pycache__/
+*.py[cod]
+
+# Ignore SQLite database files
+*.db
+
+# logs
+*.log
+
+# Ignore VS Code settings
+.vscode/
