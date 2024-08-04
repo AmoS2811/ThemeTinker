@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Header from '../components/Header';
 import Image from 'next/image';
+import AuthForm from '../components/AuthForm';
 
 const Login: React.FC = () => {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -21,43 +22,7 @@ const Login: React.FC = () => {
             <p className="text-lg text-center text-gray-600 mb-8">
               {isSignUp ? 'Ready, Set, Tinker: Register Your Account!' : 'Sign in if you already have an account.'}
             </p>
-            <form className="w-full max-w-md">
-              <div className="mb-4">
-                <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">Enter your email</label>
-                <input
-                  type="email"
-                  id="email"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  placeholder="you@example.com"
-                />
-              </div>
-              <div className="mb-6">
-                <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">Enter your password</label>
-                <input
-                  type="password"
-                  id="password"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                  placeholder="********"
-                />
-              </div>
-              <div className="flex items-center justify-between">
-                <button
-                  className="bg-primary hover:bg-secondary w-full text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                  type="button"
-                >
-                  {isSignUp ? 'Create Account' : 'Continue'}
-                </button>
-              </div>
-            </form>
-            <p className="text-lg text-center text-gray-600 mt-8">
-              {isSignUp ? "Already have an account?" : "Don't have an account?"}
-              <button
-                onClick={() => setIsSignUp(!isSignUp)}
-                className="text-primary hover:underline ml-2"
-              >
-                {isSignUp ? 'Sign in' : 'Sign up'}
-              </button>
-            </p>
+            <AuthForm isSignUp={isSignUp} toggleAuthMode={() => setIsSignUp(!isSignUp)} />
           </div>
         </div>
       </main>
