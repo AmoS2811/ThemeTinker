@@ -1,3 +1,13 @@
+# Index page
+## You can randomize colors, select filters to get a more specific set of randomized colors, lock the colors in place and randomize the rest, make small adjustments to them and so on
+![image](https://github.com/user-attachments/assets/e93e2b09-d619-4c0d-ae87-bfc1fe095d97)
+## Below is a dashboard that reflects the first three colors of the selection above, this way you can see how your colors would loook together
+![image](https://github.com/user-attachments/assets/c28f158f-5aab-4eaa-827d-55e0f7cb918e)
+## Fully working login section using Python, Flask, fastAPI and JWT
+## The image is meant to showcase various benefits of making an account but as of making this change I have not implemented anything specific to logged in users.. womp womp
+![image](https://github.com/user-attachments/assets/8cd5b25b-19de-4920-8522-5f3a7331a5b4)
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
